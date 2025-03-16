@@ -1,3 +1,5 @@
+from symbol import return_stmt
+
 patients = [
     {
         "Name": "Tony Tony Chopper",
@@ -8,33 +10,7 @@ patients = [
     }
 ]
 
-def main_menu():
-    while True:
-        print("\n--- Medical Program Menu P ---")
-        print("1. Add New Patient")
-        print("2. View All Patients")
-        print("3. Search for Patient")
-        print("4. Update Patient Information")
-        print("5. Save and Exit")
 
-        choice = input("Enter your choice: ")
-
-        if choice == "1":
-            add_patient()
-        elif choice == "2":
-            print("Viewing all patients... (coming soon)")
-        elif choice == "3":
-            print("Searching for patient... (coming soon)")
-        elif choice == "4":
-            print("Updating patient information... (Coming soon)")
-        elif choice == "5":
-            print("Saving and Exiting program (save function coming soon)")
-            break
-        else:
-            print("Invalid choice. Please try Again.")
-
-if __name__ == "__main__":
-    main_menu()
 
 def add_patient():
     print("\n--- Add New Patient ---")
@@ -74,3 +50,79 @@ def add_patient():
 
     patients.append(new_patient)
     print(f"\nPatient '{name}' has been successfully added!")
+
+
+
+# Function to display patients with sorting and detailed options
+def view_patients():
+    if not patients:
+        print("\nNo patients found in the system.")
+        return  # Exit the function if the list is empty
+
+    # Sorting Options
+    print("\n--- Display Options ---")
+    print("1. Sort by Name")
+    print("2. Sort by Age")
+    print("3. Sort by Condition")
+    print("4. Display Detailed Patient Info")
+    print("5. Back to Main Menu")
+
+    choice = input("Choose an option: ")
+
+    # Sorting Logic
+    if choice == "1":
+        sorted_patients = sorted(patients, key=lambda p: p["Name"])
+        print("\n--- Patients (Sorted by Name) ---")
+    elif choice == "2":
+        sorted_patients = sorted(patients, key=lambda p: p["Age"])
+        print("\n--- Patients (Sorted by Age) ---")
+    elif choice == "3":
+        sorted_patients = sorted(patients, key=lambda p: p["Condition"])
+        print("\n--- Patients (Sorted by Condition) ---")
+    elif choice == "4":
+        print("\n--- Detailed Patient Information ---")
+        for patient in patients:
+            print(f"\nName: {patient['Name']}")
+            print(f"Age: {patient['Age']}")
+            print(f"Blood Type: {patient['Blood Type']}")
+            print(f"Condition: {patient['Condition']}")
+            print(f"Allergies: {', '.join(patient['Allergies']) if patient['Allergies'] else 'None'}")
+        return
+    elif choice == "5":
+        return
+    else:
+        print("Invalid choice. Returning to menu.")
+        return
+
+    # Display Sorted Patients (Summary View)
+    for patient in sorted_patients:
+        print(f"{patient['Name']} (Age: {patient['Age']})")
+
+# Update main menu to include this feature
+def main_menu():
+    while True:
+        print("\n--- Medical Program Menu ---")
+        print("1. Add New Patient")
+        print("2. View All Patients")
+        print("3. Search for Patient")
+        print("4. Update Patient Information")
+        print("5. Save and Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            add_patient()
+        elif choice == "2":
+            view_patients()
+        elif choice == "3":
+            print("Searching for patient... (Coming Soon)")
+        elif choice == "4":
+            print("Updating patient information... (Coming Soon)")
+        elif choice == "5":
+            print("Saving data and exiting program. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main_menu()
