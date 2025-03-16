@@ -98,6 +98,32 @@ def view_patients():
     for patient in sorted_patients:
         print(f"{patient['Name']} (Age: {patient['Age']})")
 
+# Function to search for a patient.
+def search_patient():
+    if not patients:
+        print("\nNo patients found in the system.")
+        return
+
+    search_query = input("\nEnter the patient's name to search for: ").strip().lower()
+
+    # Find matches (case-insensitive search)
+    matches = [p for p in patients if search_query in p['Name'].lower()]
+
+    if matches:
+        print(f"\n--- Search results for '{search_query}' ---")
+        for patient in matches:
+            print(f"\nName: {patient['Name']}")
+            print(f"Age: {patient['Age']}")
+            print(f"Blood Type: {patient['Blood Type']}")
+            print(f"Condition: {patient['Condition']}")
+            print(f"Allergies: {', '.join(patient['Allergies']) if patient['Allergies'] else 'None'}")
+    else:
+        print(f"\nNo patients found matching '{search_query}'.")
+
+
+
+
+### Keep at bottom of code.
 # Update main menu to include this feature
 def main_menu():
     while True:
@@ -115,7 +141,7 @@ def main_menu():
         elif choice == "2":
             view_patients()
         elif choice == "3":
-            print("Searching for patient... (Coming Soon)")
+            search_patient()
         elif choice == "4":
             print("Updating patient information... (Coming Soon)")
         elif choice == "5":
